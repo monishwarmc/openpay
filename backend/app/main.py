@@ -7,8 +7,6 @@ from .routes import orders, payments
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Development convenience only. Use Alembic migrations before production.
-    Base.metadata.create_all(bind=engine)
     yield
 
 app = FastAPI(
