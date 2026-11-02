@@ -18,7 +18,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-origins = [os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")]
+origins = [os.getenv("FRONTEND_ORIGIN", "https://payrecilens.vercel.app/")]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
