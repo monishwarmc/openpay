@@ -21,11 +21,12 @@ app = FastAPI(
 )
 
 origins = [
-    os.getenv(
+    origin.strip()
+    for origin in os.getenv(
         "FRONTEND_ORIGIN",
-        "https://openpay-ashen.vercel.app",
         "https://payrecilens.vercel.app"
-    )
+    ).split(",")
+    if origin.strip()
 ]
 
 app.add_middleware(
