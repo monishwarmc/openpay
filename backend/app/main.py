@@ -1,22 +1,33 @@
+
 import os
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .database import Base, engine
+
 from .routes import orders, payments
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     yield
 
+
 app = FastAPI(
     title="OpenPay Simulator API",
-    description="Development-only payment simulator. It does not process real payments.",
+    description="Development-only payment simulator.",
     version="0.1.0",
     lifespan=lifespan,
 )
 
-origins = [os.getenv("FRONTEND_ORIGIN", "https://payrecilens.vercel.app/")]
+origins = [
+    os.getenv(
+        "FRONTEND_ORIGIN",
+        "https://openpay-ashen.vercel.app",
+        "https://payrecilens.vercel.app"
+    )
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -27,6 +38,7 @@ app.add_middleware(
 
 app.include_router(orders.router)
 app.include_router(payments.router)
+
 
 @app.get("/health")
 def health():
